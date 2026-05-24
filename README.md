@@ -10,6 +10,18 @@ A CompleteTech LLC Codex skill for creating invoice drafts and billing documents
 
 Part of the CompleteTech LLC agentic services skill library. This skill drafts billing documents tied to verified contracts, scopes, milestones, payment terms, credits, refunds, and support events.
 
+## OpenClaw / ClawHub Metadata
+
+- Skill key: `agentic-invoice-skill`
+- Version-ready metadata: `1.0.0`
+- Homepage: https://github.com/CompleteTech-LLC/agentic-invoice-skill
+- README: https://github.com/CompleteTech-LLC/agentic-invoice-skill#readme
+- Runtime binaries: `python3`
+- Python packages: none
+- Intended registry/discovery tags: `latest`, `complete-tech`, `codex-skill`, `agentic-development`, `agentic-workflows`, `invoice`, `billing`, `payments`
+- License: repository code, templates, and documentation use MIT; ClawHub publishing is intentionally skipped for now.
+- Brand assets: CompleteTech LLC names, logos, seals, and brand assets are reserved; see `BRAND_ASSETS.md`.
+
 ## Workflow Diagram
 
 ```mermaid
