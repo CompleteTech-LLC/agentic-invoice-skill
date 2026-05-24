@@ -2,6 +2,24 @@
 
 A CompleteTech LLC Codex skill for creating invoice drafts and billing documents for agentic development engagements.
 
+## Workflow Diagram
+
+```mermaid
+flowchart LR
+  A[Billing event] --> B[Contract, SOW, or milestone evidence]
+  B --> C[Invoice type selection]
+  C --> D[Line items, terms, taxes, and credits]
+  D --> E{Payment facts verified?}
+  E -->|No| F[Draft with TBDs]
+  E -->|Yes| G[Invoice, receipt, credit, or refund document]
+  classDef source fill:#eef6ff,stroke:#3778c2,color:#102a43;
+  classDef gate fill:#fff7e6,stroke:#c97a12,color:#3d2600;
+  classDef output fill:#eefaf0,stroke:#2f8f46,color:#12351d;
+  class A,B,C,D source;
+  class E gate;
+  class F,G output;
+```
+
 ## What It Does
 
 - Selects the right invoice by billing event.

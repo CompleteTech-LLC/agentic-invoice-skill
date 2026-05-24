@@ -9,6 +9,10 @@ description: Create tailored invoices, invoice line items, payment requests, cre
 
 Create practical invoice documents for agentic development services end to end: upfront deposits, scoped pilots, discovery, implementation, evaluation, change orders, retainers, support, expenses, credits, late fees, refunds, and closeout.
 
+## System Boundary
+
+This skill owns billing document drafting and invoice-event selection. Use `agentic-proposal-skill` for pricing rationale or commercial scope before approval, `agentic-contract-skill` for agreement terms, `agentic-delivery-skill` for milestone evidence, `agentic-email-skill` for the message that sends an invoice, and an accounting system or human reviewer for final tax, payment, ledger, and collection decisions.
+
 ## Core Workflow
 
 1. Identify the invoice event: estimate, deposit, milestone, monthly retainer, time and materials, change order, expense, final invoice, credit, late fee, refund, or renewal.
@@ -61,7 +65,7 @@ Choose by billing event:
 
 When several templates fit, choose the invoice closest to the actual commercial trigger. For example, if a prototype was delivered but the contract bills only on milestone acceptance, use `milestone-invoice`, not `prototype-delivery-invoice`.
 
-## Invoice Quality Rules
+## Quality Rules
 
 - Use exact client-provided amounts and terms.
 - Keep line items specific enough for approval but not cluttered.
