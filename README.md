@@ -87,18 +87,18 @@ Full-document **branded PDF** rendered from the generated artifact: [example.pdf
 - Net 15 terms; rendered with `--no-cover` for a proper single-document invoice.
 - Demonstration artifact — never invents bank, tax ID, or PO numbers.
 
-Generate the branded PDF (artifacts are delivered as PDFs, not raw Markdown):
+Generate it in one command (branded PDF + Markdown, like the contract skill):
 
 ```bash
 pip install -r requirements.txt
-# 1) Draft the artifact (optionally start from a catalog template)
-python3 scripts/render_invoice.py --template milestone-invoice > assets/examples/example.md
-# 2) Render the branded CompleteTech PDF (+ optional PNG preview)
-python3 scripts/render_pdf.py --markdown assets/examples/example.md \
+python3 scripts/render_invoice.py --template milestone-invoice \
   --out assets/examples/example.pdf --png assets/examples/example.png \
-  --logo assets/logo.png --no-cover --title "Invoice INV-2026-0461" \
+  --markdown-out assets/examples/example.md \
+  --logo assets/logo.png --no-cover --title "Invoice INV-2026-0461" --doc-type "MILESTONE INVOICE" \
   --meta "INVOICE NO.=INV-2026-0461" --meta "DUE=2026-06-23"
 ```
+
+The committed `example.{md,pdf,png}` use curated, realistic demonstration data for the Northwind Trading Co. support-triage pilot; pass `--var key=value` to fill template placeholders with your own facts.
 
 ## Brand Notes
 

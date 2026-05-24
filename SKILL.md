@@ -107,16 +107,17 @@ If a user needs a polished production invoice, use the rendered draft as a start
 
 ## Rendering to a Branded PDF
 
-Artifacts from this skill are delivered as branded CompleteTech LLC **PDF** documents, not raw Markdown. After drafting the artifact text (optionally starting from a catalog template), render it with the bundled generator:
+Artifacts from this skill are delivered as branded CompleteTech LLC **PDF** documents, not raw Markdown. The renderer emits the PDF (and prints the Markdown) in **one command**, using the same reportlab branding engine as the contract skill:
 
 ```bash
 pip install -r requirements.txt
-python3 scripts/render_pdf.py \
-  --markdown artifact.md --out artifact.pdf --png artifact.png \
-  --logo assets/logo.png \
+python3 scripts/render_invoice.py --template milestone-invoice \
+  --out artifact.pdf --png artifact.png \
   --title "Invoice INV-2026-0461" --doc-type "MILESTONE INVOICE" \
-  --subtitle "Prepared for <b>Client Name</b>" \
-  --meta "DOCUMENT NO.=INV-2026-0461" --meta "DATE=2026-05-24"
+  --meta "INVOICE NO.=INV-2026-0461" --meta "DUE=2026-06-23" --no-cover \
+  --var client_name="Client Name" --var workflow="support triage"
 ```
 
-`scripts/render_pdf.py` applies the shared CompleteTech branding (logo, cover page, letterhead band, watermark, footer) and supports a Markdown subset: `#`/`##`/`###` headings, paragraphs, `-` bullet lists, tables, `>` callouts, `**bold**`, and `[PAGE_BREAK]`. It requires `reportlab`; the optional `--png` preview montage requires `pypdfium2` and `pillow`. See `assets/examples/` for a rendered example.
+- `--no-pdf` emits Markdown only (the original behavior); `--no-cover` drops the cover page.
+- Already drafted the Markdown yourself? Render it directly: `python3 scripts/render_pdf.py --markdown artifact.md --out artifact.pdf --logo assets/logo.png --title "..."`.
+- The PDF supports a Markdown subset: `#`/`##`/`###` headings, paragraphs, `-` bullets, tables, `>` callouts, `**bold**`, and `[PAGE_BREAK]`. PDF requires `reportlab`; the optional `--png` preview requires `pypdfium2` and `pillow`. See `assets/examples/` for a rendered example.
