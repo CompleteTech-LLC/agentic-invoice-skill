@@ -1,0 +1,93 @@
+---
+name: agentic-invoice-skill
+description: Create tailored invoices, invoice line items, payment requests, credit memos, pro forma invoices, recurring invoices, milestone invoices, change-order invoices, expense pass-through invoices, late-fee notices, and end-to-end billing workflows for agentic development services. Use when Codex needs to choose, draft, validate, or adapt invoice documents for agentic software workflow engagements from deposit through final payment and post-sale support.
+---
+
+# Agentic Invoice Skill
+
+## Purpose
+
+Create practical invoice documents for agentic development services end to end: upfront deposits, scoped pilots, discovery, implementation, evaluation, change orders, retainers, support, expenses, credits, late fees, refunds, and closeout.
+
+## Core Workflow
+
+1. Identify the invoice event: estimate, deposit, milestone, monthly retainer, time and materials, change order, expense, final invoice, credit, late fee, refund, or renewal.
+2. Gather required facts: provider, client, invoice number, issue date, due date, terms, currency, contract or SOW reference, project name, billing period, line items, taxes, discounts, credits, previous payments, payment instructions, and notes.
+3. Use `references/invoice-positioning.md` for service language and risk boundaries.
+4. Use `references/use-case-decision-table.md` to choose the right invoice type.
+5. Use `references/invoice-lifecycle.md` for end-to-end billing flow and gates.
+6. Use `references/invoice-catalog.md` for the near-exhaustive invoice template library.
+7. Draft clearly and conservatively. Do not invent tax IDs, banking details, tax rates, contract terms, or legal/accounting claims.
+
+## Invoice Selection Guide
+
+Choose by billing event:
+
+- Before signed agreement or purchase order: use `pro-forma-invoice` or `deposit-request-invoice`.
+- Fixed-scope pilot deposit: use `pilot-deposit-invoice`.
+- Workflow assessment only: use `discovery-assessment-invoice`.
+- Contract signing deposit: use `contract-deposit-invoice`.
+- Milestone reached: use `milestone-invoice`.
+- Prototype delivered: use `prototype-delivery-invoice`.
+- Evaluation or test-set work delivered: use `evaluation-work-invoice`.
+- Documentation and handoff complete: use `handoff-invoice`.
+- Final balance due: use `final-balance-invoice`.
+- Hourly work: use `time-and-materials-invoice`.
+- Monthly support or managed monitoring: use `monthly-retainer-invoice`.
+- Recurring agent operations support: use `recurring-support-invoice`.
+- Additional scope after agreement: use `change-order-invoice`.
+- Rush work: use `rush-fee-invoice`.
+- Added integration or tool connector: use `integration-add-on-invoice`.
+- API, model, hosting, storage, or third-party pass-through charges: use `usage-pass-through-invoice`.
+- Travel, printing, procurement, or reimbursable costs: use `expense-reimbursement-invoice`.
+- Support hours exceeded: use `support-overage-invoice`.
+- Late payment fee or finance charge: use `late-fee-invoice`.
+- Payment plan installment: use `installment-invoice`.
+- Partial payment received: use `partial-payment-receipt-invoice`.
+- Client prepayment or credit balance: use `prepayment-credit-invoice`.
+- Discount or courtesy reduction: use `discount-adjustment-invoice`.
+- Correcting a prior invoice: use `corrected-invoice`.
+- Cancelled project with earned work: use `termination-invoice`.
+- Refund owed: use `refund-memo`.
+- Credit owed against future work: use `credit-memo`.
+- Retainer renewal: use `retainer-renewal-invoice`.
+- Expansion to a second workflow: use `expansion-workflow-invoice`.
+- Training or enablement: use `training-invoice`.
+- Advisory-only work: use `advisory-invoice`.
+- Acceptance holdback release: use `holdback-release-invoice`.
+- Tax-only adjustment: use `tax-only-invoice`.
+- Voiding a prior invoice: use `voided-invoice-notice`.
+- Confirming full payment: use `paid-in-full-receipt`.
+
+When several templates fit, choose the invoice closest to the actual commercial trigger. For example, if a prototype was delivered but the contract bills only on milestone acceptance, use `milestone-invoice`, not `prototype-delivery-invoice`.
+
+## Invoice Quality Rules
+
+- Use exact client-provided amounts and terms.
+- Keep line items specific enough for approval but not cluttered.
+- Tie invoices to contract, SOW, change order, or accepted milestone references when available.
+- Separate professional services, third-party pass-throughs, expenses, taxes, credits, and late fees.
+- Mark drafts as drafts if payment details or tax handling are unknown.
+- Do not put legal, tax, or accounting advice on invoices unless the user specifically asks for explanatory notes.
+- Never fabricate bank accounts, tax IDs, purchase order numbers, tax rates, or compliance status.
+
+## Resource Guide
+
+- `references/invoice-positioning.md`: load for agentic development service wording, line-item language, and boundaries.
+- `references/use-case-decision-table.md`: load when choosing which invoice to use.
+- `references/invoice-lifecycle.md`: load for end-to-end invoicing workflows, approval gates, and follow-up steps.
+- `references/invoice-catalog.md`: load for the near-exhaustive invoice template library.
+- `references/template-index.json`: machine-readable template metadata used by the renderer.
+- `scripts/render_invoice.py`: list invoice templates or render a draft with placeholders.
+
+## Renderer
+
+Use the renderer for repeatable invoice drafts or template discovery:
+
+```bash
+python3 scripts/render_invoice.py --list
+python3 scripts/render_invoice.py --stage milestone --list
+python3 scripts/render_invoice.py --template pilot-deposit-invoice --var client_name=Acme --var invoice_number=INV-1001 --var amount_due=6000
+```
+
+If a user needs a polished production invoice, use the rendered draft as a starting point and replace every placeholder with verified facts.
