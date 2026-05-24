@@ -17,8 +17,8 @@ Part of the CompleteTech LLC agentic services skill library. This skill drafts b
 - Homepage: https://github.com/CompleteTech-LLC/agentic-invoice-skill
 - README: https://github.com/CompleteTech-LLC/agentic-invoice-skill#readme
 - Runtime binaries: `python3`
-- Python packages: none
-- Intended registry/discovery tags: `latest`, `complete-tech`, `codex-skill`, `agentic-development`, `agentic-workflows`, `invoice`, `billing`, `payments`
+- Python packages: `reportlab>=4.0` (optional PNG preview: `pypdfium2`, `pillow`)
+- Intended registry/discovery tags: `latest`, `complete-tech`, `codex-skill`, `agentic-development`, `agentic-workflows`, `invoice`, `billing`, `payments`, `pdf`, `pdf-generator`
 - License: repository code, templates, and documentation use MIT; ClawHub publishing is intentionally skipped for now.
 - Brand assets: CompleteTech LLC names, logos, seals, and brand assets are reserved; see `BRAND_ASSETS.md`.
 
@@ -55,6 +55,8 @@ flowchart LR
 - `references/invoice-lifecycle.md` - end-to-end billing workflow and approval gates.
 - `references/invoice-positioning.md` - CompleteTech LLC invoice language and guardrails.
 - `scripts/render_invoice.py` - deterministic template listing and rendering helper.
+- `scripts/render_pdf.py` - branded CompleteTech PDF generator (Markdown -> PDF + optional PNG preview).
+- `requirements.txt` - Python dependencies for branded PDF rendering.
 
 ## Quick Start
 
@@ -74,32 +76,29 @@ Rendered templates are drafts. Replace placeholders with verified client, contra
 
 ## Example
 
-![Pilot kickoff invoice preview](assets/examples/example.png)
+![Invoice INV-2026-0461 preview](assets/examples/example.png)
 
-Full-document preview converted from generated artifact: [example.md](assets/examples/example.md).
+Full-document **branded PDF** rendered from the generated artifact: [example.pdf](assets/examples/example.pdf). Markdown source: [example.md](assets/examples/example.md).
 
-**Milestone invoice: Pilot kickoff deposit**
+**Milestone invoice: Northwind Trading Co. — prototype milestone**
+
+- Bills the accepted prototype milestone under ADSA-2026-0142 with a deposit credit applied.
+- Line items, subtotal, and total due (USD 9,520.00) on a branded one-page invoice.
+- Net 15 terms; rendered with `--no-cover` for a proper single-document invoice.
+- Demonstration artifact — never invents bank, tax ID, or PO numbers.
+
+Generate the branded PDF (artifacts are delivered as PDFs, not raw Markdown):
 
 ```bash
-python3 scripts/render_invoice.py \
-  --template pilot-deposit-invoice \
-  --var client_name="Northstar Support" \
-  --var invoice_number="INV-2026-014" \
-  --var issue_date="2026-05-24" \
-  --var due_date="2026-06-07" \
-  --var contract_id="ADSA-NORTHSTAR-001" \
-  --var workflow="support triage pilot" \
-  --var amount_due="USD 6,000" \
-  > assets/examples/example.md
+pip install -r requirements.txt
+# 1) Draft the artifact (optionally start from a catalog template)
+python3 scripts/render_invoice.py --template milestone-invoice > assets/examples/example.md
+# 2) Render the branded CompleteTech PDF (+ optional PNG preview)
+python3 scripts/render_pdf.py --markdown assets/examples/example.md \
+  --out assets/examples/example.pdf --png assets/examples/example.png \
+  --logo assets/logo.png --no-cover --title "Invoice INV-2026-0461" \
+  --meta "INVOICE NO.=INV-2026-0461" --meta "DUE=2026-06-23"
 ```
-
-Example line item:
-
-| Description | Amount |
-|---|---:|
-| Agentic support triage pilot kickoff deposit, including workflow setup, approval-gate design, evaluation examples, and delivery planning | USD 6,000 |
-
-Keep tax, payment instructions, and purchase-order fields as `TBD` until verified.
 
 ## Brand Notes
 
