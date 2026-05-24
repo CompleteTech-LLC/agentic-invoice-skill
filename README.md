@@ -76,6 +76,8 @@ Rendered templates are drafts. Replace placeholders with verified client, contra
 
 ![Pilot kickoff invoice preview](assets/examples/example.png)
 
+Preview converted from generated artifact: [example.md](assets/examples/example.md).
+
 **Milestone invoice: Pilot kickoff deposit**
 
 ```bash
@@ -87,7 +89,8 @@ python3 scripts/render_invoice.py \
   --var due_date="2026-06-07" \
   --var contract_id="ADSA-NORTHSTAR-001" \
   --var workflow="support triage pilot" \
-  --var amount_due="USD 6,000"
+  --var amount_due="USD 6,000" \
+  > assets/examples/example.md
 ```
 
 Example line item:
