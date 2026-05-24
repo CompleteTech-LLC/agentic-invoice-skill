@@ -72,6 +72,32 @@ python3 scripts/render_invoice.py \
 
 Rendered templates are drafts. Replace placeholders with verified client, contract, tax, payment, and accounting details before use.
 
+## Example
+
+![Pilot kickoff invoice preview](assets/examples/example.png)
+
+**Milestone invoice: Pilot kickoff deposit**
+
+```bash
+python3 scripts/render_invoice.py \
+  --template pilot-deposit-invoice \
+  --var client_name="Northstar Support" \
+  --var invoice_number="INV-2026-014" \
+  --var issue_date="2026-05-24" \
+  --var due_date="2026-06-07" \
+  --var contract_id="ADSA-NORTHSTAR-001" \
+  --var workflow="support triage pilot" \
+  --var amount_due="USD 6,000"
+```
+
+Example line item:
+
+| Description | Amount |
+|---|---:|
+| Agentic support triage pilot kickoff deposit, including workflow setup, approval-gate design, evaluation examples, and delivery planning | USD 6,000 |
+
+Keep tax, payment instructions, and purchase-order fields as `TBD` until verified.
+
 ## Brand Notes
 
 Use clear, specific, auditable line items. Separate professional services, pass-through costs, expenses, taxes, credits, and late fees. Do not invent tax IDs, banking details, tax rates, purchase orders, contract terms, or legal/accounting conclusions.
