@@ -1,6 +1,14 @@
 # Agentic Invoice Skill
 
+<p align="center">
+  <img src="assets/logo.png" alt="CompleteTech LLC logo" width="260">
+</p>
+
 A CompleteTech LLC Codex skill for creating invoice drafts and billing documents for agentic development engagements.
+
+## About
+
+Part of the CompleteTech LLC agentic services skill library. This skill drafts billing documents tied to verified contracts, scopes, milestones, payment terms, credits, refunds, and support events.
 
 ## Workflow Diagram
 
@@ -55,3 +63,7 @@ Rendered templates are drafts. Replace placeholders with verified client, contra
 ## Brand Notes
 
 Use clear, specific, auditable line items. Separate professional services, pass-through costs, expenses, taxes, credits, and late fees. Do not invent tax IDs, banking details, tax rates, purchase orders, contract terms, or legal/accounting conclusions.
+
+## License
+
+Code, templates, and documentation are licensed under the MIT License. CompleteTech LLC names, logos, seals, and brand assets are reserved and are not licensed for reuse except to identify this project. See `LICENSE` and `BRAND_ASSETS.md`.
