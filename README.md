@@ -78,7 +78,7 @@ Rendered templates are drafts. Replace placeholders with verified client, contra
 
 ![Invoice INV-2026-0461 preview](assets/examples/example.png)
 
-Full-document **branded PDF** rendered from the generated artifact: [example.pdf](assets/examples/example.pdf). Markdown source: [example.md](assets/examples/example.md).
+Example files: [Markdown](assets/examples/example.md) · [PDF](assets/examples/example.pdf) · [DOCX](assets/examples/example.docx).
 
 **Milestone invoice: Northwind Trading Co. — prototype milestone**
 
