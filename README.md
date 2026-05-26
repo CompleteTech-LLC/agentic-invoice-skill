@@ -24,6 +24,9 @@ Part of the CompleteTech LLC agentic services skill library. This skill drafts b
 
 ## Workflow Diagram
 
+Source: [assets/diagrams/workflow.mmd](assets/diagrams/workflow.mmd).
+
+
 ```mermaid
 flowchart LR
   A[Billing event] --> B[Contract, SOW, or milestone evidence]
