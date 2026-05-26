@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.9
+version: 1.0.10
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -174,7 +174,7 @@ python3 scripts/render_invoice.py --template milestone-invoice \
 | Markdown source | `--markdown-out artifact.md` |
 | Markdown only | `--no-pdf` |
 | Single-document invoice | `--no-cover` |
-| Existing Markdown to PDF | `python3 scripts/render_pdf.py --markdown artifact.md --out artifact.pdf --logo assets/logo.png --title "..."` |
+| Existing billing Markdown to PDF | `python3 scripts/render_pdf.py --markdown invoice.md --out invoice.pdf --logo assets/logo.png --title "Invoice INV-2026-0461" --doc-type "MILESTONE INVOICE"` |
 
 | Rendering Support | Details |
 |---|---|

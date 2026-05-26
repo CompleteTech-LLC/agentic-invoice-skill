@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
-"""Shared CompleteTech-branded Markdown -> PDF renderer + full-page PNG montage.
+"""Invoice-scoped Markdown -> branded billing PDF renderer + PNG preview.
 
-Generalized from agentic_contract_skill/generate_contract.py so the same
-CompleteTech LLC branding (logo, palette, cover, letterhead, watermark, footer)
-can be applied to every skill in the library.
+This helper is packaged inside agentic-invoice-skill and is intentionally
+limited to invoice, receipt, credit/refund memo, and other billing artifacts.
+It is not a generic CompleteTech proposal, contract, endorsement, or official
+authorization document generator.
 
 Usage:
-    python render_branded_pdf.py \
-        --markdown doc.md --out out.pdf --png out.png \
-        --logo /path/assets/logo.png \
-        --title "Statement of Work" --eyebrow "COMPLETETECH LLC" \
-        --doc-type "PROPOSAL" \
-        --subtitle "Prepared for <b>Northwind Trading Co.</b>" \
-        --meta "DOCUMENT NO.=PRO-2026-0188" \
+    python scripts/render_pdf.py \
+        --markdown invoice.md --out invoice.pdf --png invoice.png \
+        --logo assets/logo.png \
+        --title "Invoice INV-2026-0461" --eyebrow "COMPLETETECH LLC" \
+        --doc-type "MILESTONE INVOICE" \
+        --subtitle "Bill To: <b>Northwind Trading Co.</b>" \
+        --meta "INVOICE NO.=INV-2026-0461" \
         --meta "DATE=2026-05-24" \
-        --meta "PREPARED BY=CompleteTech LLC" \
-        --watermark "DEMO DRAFT" \
-        --footer "CompleteTech LLC - Innovation at Every Integration"
+        --meta "STATUS=DRAFT - VERIFY BEFORE SENDING" \
+        --watermark "BILLING DRAFT" \
+        --footer "CompleteTech LLC - billing draft only - verify before use"
 """
 
 from __future__ import annotations
@@ -24,6 +25,7 @@ from __future__ import annotations
 import argparse
 import html
 import re
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
@@ -40,7 +42,7 @@ from reportlab.platypus import (
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 
 # --------------------------------------------------------------------------- #
-# Brand palette (CompleteTech LLC defaults, matching the contract skill)
+# Brand palette for invoice-scoped billing drafts.
 # --------------------------------------------------------------------------- #
 BRAND = {
     "accent": "#1E3A8A",
@@ -50,9 +52,56 @@ BRAND = {
     "border": "#E2E8F0",
     "zebra": "#F8FAFC",
     "brand_name": "CompleteTech",
-    "brand_tagline": "Innovation at Every Integration",
+    "brand_tagline": "Billing Draft - Verify Before Use",
     "contact": "complete.tech  ·  Timothy.Gregg@complete.tech",
 }
+
+INVOICE_SCOPE_TERMS = {
+    "invoice", "billing", "bill", "receipt", "credit", "refund", "memo",
+    "payment", "paid", "pro forma", "deposit", "milestone", "retainer",
+    "reimbursement", "expense", "overage", "fee", "tax", "void", "installment",
+    "balance", "closeout", "holdback",
+}
+NON_BILLING_DOC_TERMS = {
+    "proposal", "statement of work", "sow", "contract", "agreement",
+    "case study", "testimonial", "certificate", "email", "security review",
+    "delivery artifact",
+}
+
+
+def invoice_scope_text(cfg: Dict[str, Any], md: str) -> str:
+    meta_text = " ".join(f"{label} {value}" for label, value in cfg.get("meta", []))
+    return " ".join([
+        str(cfg.get("title", "")),
+        str(cfg.get("doc_type", "")),
+        str(cfg.get("subtitle", "")),
+        meta_text,
+        md[:2000],
+    ]).lower()
+
+
+def validate_invoice_scope(md: str, cfg: Dict[str, Any]) -> None:
+    title_text = str(cfg.get("title", "")).lower()
+    doc_type_text = str(cfg.get("doc_type", "")).lower()
+    doc_type_is_non_billing = any(term in doc_type_text for term in NON_BILLING_DOC_TERMS)
+    title_is_non_billing = (
+        any(term in title_text for term in NON_BILLING_DOC_TERMS)
+        and not any(term in title_text for term in INVOICE_SCOPE_TERMS)
+    )
+    if doc_type_is_non_billing or title_is_non_billing:
+        raise ValueError(
+            "agentic-invoice-skill cannot render proposal, contract, delivery, "
+            "certificate, case-study, email, security-review, or other non-billing "
+            "document labels. Use the owning specialist skill for those artifacts."
+        )
+    text = invoice_scope_text(cfg, md)
+    if not any(term in text for term in INVOICE_SCOPE_TERMS):
+        raise ValueError(
+            "agentic-invoice-skill can render only invoice, receipt, credit/refund memo, "
+            "payment, expense, or other billing artifacts. Use the owning specialist "
+            "skill for proposals, contracts, case studies, certificates, emails, or "
+            "other non-billing documents."
+        )
 
 
 def hex_color(raw: Optional[str], fallback: str) -> colors.Color:
@@ -486,6 +535,7 @@ def cover_flowables(cfg, styles, available, pal) -> List[Any]:
 
 
 def build_pdf(md, cfg, out_path: Path):
+    validate_invoice_scope(md, cfg)
     pal = palette()
     styles = make_styles(pal)
     cover = cfg["cover"]
@@ -561,13 +611,13 @@ def main() -> int:
     ap.add_argument("--logo", default=None)
     ap.add_argument("--title", default="Document")
     ap.add_argument("--eyebrow", default="CompleteTech LLC")
-    ap.add_argument("--doc-type", default="")
+    ap.add_argument("--doc-type", default="", help="Billing document label, such as INVOICE, RECEIPT, CREDIT MEMO, or REFUND MEMO.")
     ap.add_argument("--subtitle", default="")
     ap.add_argument("--meta", action="append", default=[])
     ap.add_argument("--doc-id", default="")
-    ap.add_argument("--watermark", default="DEMO DRAFT")
-    ap.add_argument("--footer", default="CompleteTech LLC - Innovation at Every Integration - demonstration artifact")
-    ap.add_argument("--disclaimer", default="Demonstration artifact generated with realistic placeholder data — not a real client engagement.")
+    ap.add_argument("--watermark", default="BILLING DRAFT")
+    ap.add_argument("--footer", default="CompleteTech LLC - billing draft only - verify before use")
+    ap.add_argument("--disclaimer", default="Billing draft generated from provided facts. Verify client, contract, tax, payment, and approval details before use.")
     ap.add_argument("--no-cover", action="store_true")
     ap.add_argument("--scale", type=float, default=2.0)
     ap.add_argument("--cols", type=int, default=None)
@@ -584,7 +634,11 @@ def main() -> int:
     }
     md = Path(args.markdown).read_text(encoding="utf-8")
     out_pdf = Path(args.out).resolve()
-    build_pdf(md, cfg, out_pdf)
+    try:
+        build_pdf(md, cfg, out_pdf)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
     print(f"PDF: {out_pdf}")
     if args.png:
         montage(out_pdf, Path(args.png).resolve(), scale=args.scale, cols=args.cols)

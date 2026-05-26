@@ -13,7 +13,7 @@ Part of the CompleteTech LLC agentic services skill library. This skill drafts b
 ## OpenClaw / ClawHub Metadata
 
 - Skill key: `agentic-invoice-skill`
-- Version-ready metadata: `1.0.9`
+- Version-ready metadata: `1.0.10`
 - Homepage: https://github.com/CompleteTech-LLC/agentic-invoice-skill
 - README: https://github.com/CompleteTech-LLC/agentic-invoice-skill#readme
 - Runtime binaries: `python3`
@@ -60,7 +60,7 @@ flowchart LR
 - `references/invoice-lifecycle.md` - end-to-end billing workflow and approval gates.
 - `references/invoice-positioning.md` - CompleteTech LLC invoice language and guardrails.
 - `scripts/render_invoice.py` - deterministic template listing and rendering helper.
-- `scripts/render_pdf.py` - branded CompleteTech PDF generator (Markdown -> PDF + optional PNG preview).
+- `scripts/render_pdf.py` - invoice-scoped branded billing PDF generator (Markdown -> PDF + optional PNG preview).
 - `requirements.txt` - Python dependencies for branded PDF rendering.
 
 ## Quick Start
@@ -92,7 +92,7 @@ Example files: [Markdown](assets/examples/example.md) · [PDF](assets/examples/e
 - Net 15 terms; rendered with `--no-cover` for a proper single-document invoice.
 - Demonstration artifact — never invents bank, tax ID, or PO numbers.
 
-Generate it in one command (branded PDF + Markdown, like the contract skill):
+Generate it in one command (branded billing PDF + Markdown):
 
 ```bash
 pip install -r requirements.txt

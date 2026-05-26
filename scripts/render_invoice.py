@@ -57,19 +57,18 @@ def main() -> int:
     parser.add_argument("--template", help="Template ID to render.")
     parser.add_argument("--var", action="append", default=[], help="Placeholder value as key=value.")
     parser.add_argument("--out", default=None,
-                        help="Branded PDF output path (default: output/<template>.pdf). "
-                             "Same reportlab branding as the contract skill.")
+                        help="Branded billing PDF output path (default: output/<template>.pdf).")
     parser.add_argument("--markdown-out", default=None, help="Also write the filled Markdown here.")
     parser.add_argument("--png", default=None, help="Optional PNG preview montage path.")
     parser.add_argument("--no-pdf", action="store_true", help="Emit Markdown only; skip PDF.")
     parser.add_argument("--no-cover", action="store_true", help="Skip the PDF cover page.")
     parser.add_argument("--title", default=None, help="PDF title (defaults to the template subject/id).")
-    parser.add_argument("--doc-type", default=None, help="PDF doc-type label (defaults to the template stage).")
+    parser.add_argument("--doc-type", default=None, help="Billing PDF doc-type label (defaults to the template type).")
     parser.add_argument("--subtitle", default="", help="Cover subtitle, e.g. \"Prepared for <b>Client</b>\".")
     parser.add_argument("--logo", default=None, help="Logo path (defaults to assets/logo.png).")
     parser.add_argument("--meta", action="append", default=[], help="Cover/letterhead chip as LABEL=VALUE.")
-    parser.add_argument("--watermark", default="DEMO DRAFT", help="Watermark text (empty to disable).")
-    parser.add_argument("--footer", default="CompleteTech LLC - demonstration artifact", help="Footer text.")
+    parser.add_argument("--watermark", default="BILLING DRAFT", help="Watermark text (empty to disable).")
+    parser.add_argument("--footer", default="CompleteTech LLC - billing draft only - verify before use", help="Footer text.")
     args = parser.parse_args()
 
     templates = load_index()
@@ -97,8 +96,7 @@ def main() -> int:
     if args.no_pdf:
         return 0
 
-    # Branded PDF output: same reportlab engine and CompleteTech branding as the
-    # contract skill (see scripts/render_pdf.py). One command -> Markdown + PDF.
+    # Branded billing PDF output. One command -> Markdown + PDF.
     from datetime import date
     here = Path(__file__).resolve().parent
     sys.path.insert(0, str(here))
@@ -117,7 +115,22 @@ def main() -> int:
     if not meta:
         meta = [("REFERENCE", args.template.upper()), ("DATE", date.today().isoformat())]
     title = args.title or item.get("subject") or item.get("title") or args.template.replace("-", " ").title()
-    doc_type = args.doc_type if args.doc_type is not None else str(item.get("stage", "")).replace("_", " ").upper()
+    template_id = str(item.get("id", args.template))
+    template_kind = str(item.get("type", "")).replace("_", " ").upper()
+    if args.doc_type is not None:
+        doc_type = args.doc_type
+    elif "receipt" in template_id:
+        doc_type = "PAID-IN-FULL RECEIPT" if "paid-in-full" in template_id else "PAYMENT RECEIPT"
+    elif "refund" in template_id:
+        doc_type = "REFUND MEMO"
+    elif "credit" in template_id:
+        doc_type = "CREDIT MEMO"
+    elif "void" in template_id:
+        doc_type = "VOIDED INVOICE NOTICE"
+    elif "memo" in template_id:
+        doc_type = template_kind or "BILLING MEMO"
+    else:
+        doc_type = f"{template_kind} INVOICE".strip() if template_kind else "INVOICE"
     logo = Path(args.logo) if args.logo else (ROOT / "assets" / "logo.png")
     out_pdf = Path(args.out) if args.out else (ROOT / "output" / f"{args.template}.pdf")
     out_pdf.parent.mkdir(parents=True, exist_ok=True)
@@ -130,7 +143,7 @@ def main() -> int:
         "title": title, "eyebrow": "CompleteTech LLC", "doc_type": doc_type,
         "subtitle": args.subtitle, "meta": meta, "doc_id": meta[0][1] if meta else "",
         "watermark": args.watermark, "footer": args.footer,
-        "disclaimer": "Demonstration artifact \u2014 replace placeholders with verified facts before use.",
+        "disclaimer": "Billing draft generated from provided facts. Verify client, contract, tax, payment, and approval details before use.",
         "cover": not args.no_cover,
     }
     build_pdf(rendered, cfg, out_pdf)
