@@ -1,8 +1,8 @@
 ---
 name: agentic-invoice-skill
 description: >-
-  Create tailored invoices, invoice line items, payment requests, credit memos, pro forma invoices, recurring invoices, milestone invoices, change-order invoices, expense pass-through invoices, late-fee notices, and end-to-end billing workflows for agentic development services. Use when Codex needs to choose, draft, validate, or adapt invoice documents for agentic software workflow engagements from deposit through final payment and post-sale support.
-version: 1.0.2
+  Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
+version: 1.0.3
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -22,6 +22,20 @@ metadata:
 ---
 
 # Agentic Invoice Skill
+
+## At a Glance
+
+| What it creates | Best for | Output |
+|---|---|---|
+| Invoices and billing documents | Deposits, milestones, retainers, support, change orders, credits, receipts, refunds, and closeout | Branded PDF, Markdown, optional PNG preview |
+
+This skill turns verified billing events, line items, contract references, credits, payment terms, and approval facts into clean CompleteTech-style invoice artifacts. It is local-only: it creates documents and does not issue invoices, collect payment, or call accounting systems.
+
+## Included Billing Documents
+
+- Pro forma, deposit, pilot, discovery, milestone, prototype, final balance, and time-and-materials invoices.
+- Retainer, recurring support, overage, expansion, training, advisory, and pass-through invoices.
+- Credit memos, refund memos, corrected invoices, void notices, installment requests, and paid-in-full receipts.
 
 ## Purpose
 
