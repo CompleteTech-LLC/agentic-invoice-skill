@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.7
+version: 1.0.8
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -113,18 +113,29 @@ Choose by the actual commercial trigger first.
 
 ## Resource Guide
 
-- `references/invoice-positioning.md`: load for agentic development service wording, line-item language, and boundaries.
-- `references/use-case-decision-table.md`: load when choosing which invoice to use.
-- `references/invoice-lifecycle.md`: load for end-to-end invoicing workflows, approval gates, and follow-up steps.
-- `references/invoice-catalog.md`: load for the near-exhaustive invoice template library.
-- `references/template-index.json`: machine-readable template metadata used by the renderer.
-- `scripts/render_invoice.py`: list invoice templates or render a draft with placeholders.
+| Resource | Role |
+|---|---|
+| `references/invoice-positioning.md` | Agentic development service wording, line-item language, and invoice boundaries. |
+| `references/use-case-decision-table.md` | Invoice-type selection for a specific billing event. |
+| `references/invoice-lifecycle.md` | End-to-end invoicing workflows, approval gates, and follow-up steps. |
+| `references/invoice-catalog.md` | Near-exhaustive invoice template library. |
+| `references/template-index.json` | Machine-readable template metadata used by the renderer. |
+| `scripts/render_invoice.py` | Lists invoice templates or renders a draft with placeholders. |
 
 ## Runtime Permissions
 
-This skill is a local document-rendering workflow. It reads bundled templates, references, examples, `assets/logo.png`, and user-provided Markdown or invoice variables. It writes only the user-selected `--out`, `--png`, `--markdown-out`, or default `output/` artifact paths. It runs local Python entry points for `scripts/render_invoice.py` and `scripts/render_pdf.py`.
+| Area | Runtime behavior |
+|---|---|
+| Execution | Runs local Python entry points: `scripts/render_invoice.py` and `scripts/render_pdf.py`. |
+| Reads | Bundled templates, references, examples, `assets/logo.png`, and user-provided Markdown or invoice variables. |
+| Writes | Only user-selected `--out`, `--png`, `--markdown-out`, or default `output/` artifact paths. |
+| Network | Not required and not used for invoice drafting or document rendering. |
 
-It does not require network access, credential access, persistence, privilege escalation, destructive file operations, or background services.
+| Not Included | Boundary |
+|---|---|
+| Payment operations | Does not collect payment, issue payment links, post to ledgers, or call accounting systems. |
+| Credentials | Does not read banking credentials, accounting credentials, API keys, or CRM tokens. |
+| System changes | Does not create persistence, escalate privileges, run background services, or perform destructive file operations. |
 
 ## Renderer
 

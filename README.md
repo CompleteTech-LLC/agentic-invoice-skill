@@ -13,7 +13,7 @@ Part of the CompleteTech LLC agentic services skill library. This skill drafts b
 ## OpenClaw / ClawHub Metadata
 
 - Skill key: `agentic-invoice-skill`
-- Version-ready metadata: `1.0.7`
+- Version-ready metadata: `1.0.8`
 - Homepage: https://github.com/CompleteTech-LLC/agentic-invoice-skill
 - README: https://github.com/CompleteTech-LLC/agentic-invoice-skill#readme
 - Runtime binaries: `python3`
@@ -111,9 +111,18 @@ Use clear, specific, auditable line items. Separate professional services, pass-
 
 ## Runtime Permissions
 
-This skill is a local document-rendering workflow. It reads bundled templates, references, examples, `assets/logo.png`, and user-provided Markdown or invoice variables. It writes only the user-selected `--out`, `--png`, `--markdown-out`, or default `output/` artifact paths. It runs local Python entry points for `scripts/render_invoice.py` and `scripts/render_pdf.py`.
+| Area | Runtime behavior |
+|---|---|
+| Execution | Runs local Python entry points: `scripts/render_invoice.py` and `scripts/render_pdf.py`. |
+| Reads | Bundled templates, references, examples, `assets/logo.png`, and user-provided Markdown or invoice variables. |
+| Writes | Only user-selected `--out`, `--png`, `--markdown-out`, or default `output/` artifact paths. |
+| Network | Not required and not used for invoice drafting or document rendering. |
 
-It does not require network access, credential access, persistence, privilege escalation, destructive file operations, or background services.
+| Not Included | Boundary |
+|---|---|
+| Payment operations | Does not collect payment, issue payment links, post to ledgers, or call accounting systems. |
+| Credentials | Does not read banking credentials, accounting credentials, API keys, or CRM tokens. |
+| System changes | Does not create persistence, escalate privileges, run background services, or perform destructive file operations. |
 
 ## Network Boundary
 
