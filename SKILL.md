@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Create tailored invoices, invoice line items, payment requests, credit memos, pro forma invoices, recurring invoices, milestone invoices, change-order invoices, expense pass-through invoices, late-fee notices, and end-to-end billing workflows for agentic development services. Use when Codex needs to choose, draft, validate, or adapt invoice documents for agentic software workflow engagements from deposit through final payment and post-sale support.
-version: 1.0.0
+version: 1.0.1
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
