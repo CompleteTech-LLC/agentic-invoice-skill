@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.8
+version: 1.0.9
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -139,7 +139,7 @@ Choose by the actual commercial trigger first.
 
 ## Renderer
 
-Use the renderer for repeatable invoice drafts or template discovery:
+Use the local renderer for repeatable invoice drafts, template discovery, and branded artifacts:
 
 ```bash
 python3 scripts/render_invoice.py --list
@@ -147,11 +147,16 @@ python3 scripts/render_invoice.py --stage milestone --list
 python3 scripts/render_invoice.py --template pilot-deposit-invoice --var client_name=Acme --var invoice_number=INV-1001 --var amount_due=6000
 ```
 
-If a user needs a polished production invoice, use the rendered draft as a starting point and replace every placeholder with verified facts.
+| Need | Command Pattern |
+|---|---|
+| List all templates | `python3 scripts/render_invoice.py --list` |
+| List a stage | `python3 scripts/render_invoice.py --stage milestone --list` |
+| Render a template | `python3 scripts/render_invoice.py --template pilot-deposit-invoice --var key=value` |
+| Production polish | Replace every placeholder with verified invoice, contract, tax, payment, and client facts. |
 
 ## Rendering to a Branded PDF
 
-Artifacts from this skill are delivered as branded CompleteTech LLC **PDF** documents, not raw Markdown. The renderer emits the PDF (and prints the Markdown) in **one command**, using the same reportlab branding engine as the contract skill:
+Artifacts from this skill are delivered as branded CompleteTech LLC **PDF** documents. The renderer can emit PDF, Markdown, and optional PNG preview in one local command:
 
 ```bash
 pip install -r requirements.txt
@@ -162,9 +167,21 @@ python3 scripts/render_invoice.py --template milestone-invoice \
   --var client_name="Client Name" --var workflow="support triage"
 ```
 
-- `--no-pdf` emits Markdown only (the original behavior); `--no-cover` drops the cover page.
-- Already drafted the Markdown yourself? Render it directly: `python3 scripts/render_pdf.py --markdown artifact.md --out artifact.pdf --logo assets/logo.png --title "..."`.
-- The PDF supports a Markdown subset: `#`/`##`/`###` headings, paragraphs, `-` bullets, tables, `>` callouts, `**bold**`, and `[PAGE_BREAK]`. PDF requires `reportlab==4.5.1`; the optional `--png` preview requires `pypdfium2==5.8.0` and `pillow==12.2.0`. See `assets/examples/` for a rendered example.
+| Output Need | Use |
+|---|---|
+| Branded PDF | `--out artifact.pdf` |
+| PNG preview | `--png artifact.png` |
+| Markdown source | `--markdown-out artifact.md` |
+| Markdown only | `--no-pdf` |
+| Single-document invoice | `--no-cover` |
+| Existing Markdown to PDF | `python3 scripts/render_pdf.py --markdown artifact.md --out artifact.pdf --logo assets/logo.png --title "..."` |
+
+| Rendering Support | Details |
+|---|---|
+| Markdown subset | `#`, `##`, `###`, paragraphs, `-` bullets, tables, `>` callouts, `**bold**`, and `[PAGE_BREAK]`. |
+| Required package | `reportlab==4.5.1` for PDF rendering. |
+| Optional preview packages | `pypdfium2==5.8.0` and `pillow==12.2.0` for `--png`. |
+| Example output | See `assets/examples/` for rendered Markdown, PDF, and PNG artifacts. |
 
 ## Network Boundary
 
