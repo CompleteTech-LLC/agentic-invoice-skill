@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.6
+version: 1.0.7
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -101,13 +101,15 @@ Choose by the actual commercial trigger first.
 
 ## Quality Rules
 
-- Use exact client-provided amounts and terms.
-- Keep line items specific enough for approval but not cluttered.
-- Tie invoices to contract, SOW, change order, or accepted milestone references when available.
-- Separate professional services, third-party pass-throughs, expenses, taxes, credits, and late fees.
-- Mark drafts as drafts if payment details or tax handling are unknown.
-- Do not put legal, tax, or accounting advice on invoices unless the user specifically asks for explanatory notes.
-- Never fabricate bank accounts, tax IDs, purchase order numbers, tax rates, or compliance status.
+| Rule | Requirement |
+|---|---|
+| Amounts and terms | Use exact client-provided amounts and terms. |
+| Line items | Keep line items specific enough for approval but not cluttered. |
+| References | Tie invoices to contract, SOW, change order, or accepted milestone references when available. |
+| Separation | Separate professional services, third-party pass-throughs, expenses, taxes, credits, and late fees. |
+| Unknowns | Mark drafts as drafts if payment details or tax handling are unknown. |
+| Advice boundary | Do not include legal, tax, or accounting advice unless the user specifically asks for explanatory notes. |
+| Fabrication guardrail | Never fabricate bank accounts, tax IDs, purchase order numbers, tax rates, or compliance status. |
 
 ## Resource Guide
 
