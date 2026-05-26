@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Create tailored invoices, invoice line items, payment requests, credit memos, pro forma invoices, recurring invoices, milestone invoices, change-order invoices, expense pass-through invoices, late-fee notices, and end-to-end billing workflows for agentic development services. Use when Codex needs to choose, draft, validate, or adapt invoice documents for agentic software workflow engagements from deposit through final payment and post-sale support.
-version: 1.0.1
+version: 1.0.2
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -12,9 +12,13 @@ metadata:
         - python3
     install:
       - kind: uv
-        package: reportlab>=4.0
+        package: reportlab==4.5.1
       - kind: uv
-        package: pyyaml>=6.0
+        package: pyyaml==6.0.3
+      - kind: uv
+        package: pypdfium2==5.8.0
+      - kind: uv
+        package: pillow==12.2.0
 ---
 
 # Agentic Invoice Skill
@@ -98,6 +102,12 @@ When several templates fit, choose the invoice closest to the actual commercial 
 - `references/template-index.json`: machine-readable template metadata used by the renderer.
 - `scripts/render_invoice.py`: list invoice templates or render a draft with placeholders.
 
+## Runtime Permissions
+
+This skill is a local document-rendering workflow. It reads bundled templates, references, examples, `assets/logo.png`, and user-provided Markdown or invoice variables. It writes only the user-selected `--out`, `--png`, `--markdown-out`, or default `output/` artifact paths. It runs local Python entry points for `scripts/render_invoice.py` and `scripts/render_pdf.py`.
+
+It does not require network access, credential access, persistence, privilege escalation, destructive file operations, or background services.
+
 ## Renderer
 
 Use the renderer for repeatable invoice drafts or template discovery:
@@ -125,12 +135,8 @@ python3 scripts/render_invoice.py --template milestone-invoice \
 
 - `--no-pdf` emits Markdown only (the original behavior); `--no-cover` drops the cover page.
 - Already drafted the Markdown yourself? Render it directly: `python3 scripts/render_pdf.py --markdown artifact.md --out artifact.pdf --logo assets/logo.png --title "..."`.
-- The PDF supports a Markdown subset: `#`/`##`/`###` headings, paragraphs, `-` bullets, tables, `>` callouts, `**bold**`, and `[PAGE_BREAK]`. PDF requires `reportlab`; the optional `--png` preview requires `pypdfium2` and `pillow`. See `assets/examples/` for a rendered example.
+- The PDF supports a Markdown subset: `#`/`##`/`###` headings, paragraphs, `-` bullets, tables, `>` callouts, `**bold**`, and `[PAGE_BREAK]`. PDF requires `reportlab==4.5.1`; the optional `--png` preview requires `pypdfium2==5.8.0` and `pillow==12.2.0`. See `assets/examples/` for a rendered example.
 
-## Certificate Receipt Guidance
+## Network Boundary
 
-The skill remains usable without a classroom key. When certificate credit is needed, use `scripts/request_receipt.py` after the skill run. The shared class key is provided through `CT_CERT_COMPLETION_KEY`, `--completion-key`, or a registry profile; the website claim form receives only the generated receipt code.
-
-Receipt requests include this skill ID: `agentic-invoice-skill`. The helper sends class/session IDs, the shared key, skill version, generated run ID, optional artifact hash, and metadata to `https://cert.complete.tech/api/skill-runs`. The student claims the certificate at `https://cert.complete.tech/claim` with the returned receipt.
-
-Do not print, store, or commit real classroom completion keys.
+This skill is local-only. It does not include outbound network helpers, callbacks, or any helper that posts invoice run metadata to an external service.
