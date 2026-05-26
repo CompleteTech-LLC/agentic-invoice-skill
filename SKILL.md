@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.3
+version: 1.0.4
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -33,13 +33,20 @@ This skill turns verified billing events, line items, contract references, credi
 
 ## Included Billing Documents
 
-- Pro forma, deposit, pilot, discovery, milestone, prototype, final balance, and time-and-materials invoices.
-- Retainer, recurring support, overage, expansion, training, advisory, and pass-through invoices.
-- Credit memos, refund memos, corrected invoices, void notices, installment requests, and paid-in-full receipts.
+| Category | Documents |
+|---|---|
+| Engagement start | Pro forma, deposit, pilot, discovery, and contract-deposit invoices. |
+| Delivery milestones | Milestone, prototype, evaluation-work, handoff, final-balance, and time-and-materials invoices. |
+| Ongoing services | Retainer, recurring support, overage, expansion, training, advisory, and pass-through invoices. |
+| Adjustments | Credit memos, refund memos, corrected invoices, void notices, installment requests, and paid-in-full receipts. |
 
 ## Purpose
 
-Create practical invoice documents for agentic development services end to end: upfront deposits, scoped pilots, discovery, implementation, evaluation, change orders, retainers, support, expenses, credits, late fees, refunds, and closeout.
+| Use | Scope |
+|---|---|
+| Billing artifact generation | Create practical invoice documents for agentic development services from verified billing facts. |
+| Lifecycle coverage | Upfront deposits, scoped pilots, discovery, implementation, evaluation, change orders, retainers, support, expenses, credits, late fees, refunds, and closeout. |
+| Operating boundary | Produce invoice documents only; payment collection, tax decisions, ledger posting, and collections stay with the accounting system or reviewer. |
 
 ## System Boundary
 

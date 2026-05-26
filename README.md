@@ -13,7 +13,7 @@ Part of the CompleteTech LLC agentic services skill library. This skill drafts b
 ## OpenClaw / ClawHub Metadata
 
 - Skill key: `agentic-invoice-skill`
-- Version-ready metadata: `1.0.3`
+- Version-ready metadata: `1.0.4`
 - Homepage: https://github.com/CompleteTech-LLC/agentic-invoice-skill
 - README: https://github.com/CompleteTech-LLC/agentic-invoice-skill#readme
 - Runtime binaries: `python3`
@@ -45,10 +45,12 @@ flowchart LR
 
 ## What It Does
 
-- Selects the right invoice by billing event.
-- Drafts invoices, pro formas, deposits, milestone invoices, change-order invoices, retainers, pass-through invoices, credit memos, refund memos, receipts, and closeout billing.
-- Keeps line items aligned with practical agentic development work: workflow discovery, pilot implementation, evaluation, approval gates, monitoring, documentation, handoff, support, and expansion.
-- Includes a near-exhaustive invoice catalog for the full billing lifecycle.
+| Capability | Details |
+|---|---|
+| Invoice selection | Selects the right invoice by billing event. |
+| Document drafting | Drafts invoices, pro formas, deposits, milestone invoices, change-order invoices, retainers, pass-through invoices, credit memos, refund memos, receipts, and closeout billing. |
+| Service alignment | Keeps line items aligned with practical agentic development work: workflow discovery, pilot implementation, evaluation, approval gates, monitoring, documentation, handoff, support, and expansion. |
+| Lifecycle support | Includes a near-exhaustive invoice catalog for the full billing lifecycle. |
 
 ## Contents
 
