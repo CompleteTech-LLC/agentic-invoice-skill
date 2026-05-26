@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.5
+version: 1.0.6
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -81,45 +81,23 @@ This skill turns verified billing events, line items, contract references, credi
 
 ## Invoice Selection Guide
 
-Choose by billing event:
+Choose by the actual commercial trigger first.
 
-- Before signed agreement or purchase order: use `pro-forma-invoice` or `deposit-request-invoice`.
-- Fixed-scope pilot deposit: use `pilot-deposit-invoice`.
-- Workflow assessment only: use `discovery-assessment-invoice`.
-- Contract signing deposit: use `contract-deposit-invoice`.
-- Milestone reached: use `milestone-invoice`.
-- Prototype delivered: use `prototype-delivery-invoice`.
-- Evaluation or test-set work delivered: use `evaluation-work-invoice`.
-- Documentation and handoff complete: use `handoff-invoice`.
-- Final balance due: use `final-balance-invoice`.
-- Hourly work: use `time-and-materials-invoice`.
-- Monthly support or managed monitoring: use `monthly-retainer-invoice`.
-- Recurring agent operations support: use `recurring-support-invoice`.
-- Additional scope after agreement: use `change-order-invoice`.
-- Rush work: use `rush-fee-invoice`.
-- Added integration or tool connector: use `integration-add-on-invoice`.
-- API, model, hosting, storage, or third-party pass-through charges: use `usage-pass-through-invoice`.
-- Travel, printing, procurement, or reimbursable costs: use `expense-reimbursement-invoice`.
-- Support hours exceeded: use `support-overage-invoice`.
-- Late payment fee or finance charge: use `late-fee-invoice`.
-- Payment plan installment: use `installment-invoice`.
-- Partial payment received: use `partial-payment-receipt-invoice`.
-- Client prepayment or credit balance: use `prepayment-credit-invoice`.
-- Discount or courtesy reduction: use `discount-adjustment-invoice`.
-- Correcting a prior invoice: use `corrected-invoice`.
-- Cancelled project with earned work: use `termination-invoice`.
-- Refund owed: use `refund-memo`.
-- Credit owed against future work: use `credit-memo`.
-- Retainer renewal: use `retainer-renewal-invoice`.
-- Expansion to a second workflow: use `expansion-workflow-invoice`.
-- Training or enablement: use `training-invoice`.
-- Advisory-only work: use `advisory-invoice`.
-- Acceptance holdback release: use `holdback-release-invoice`.
-- Tax-only adjustment: use `tax-only-invoice`.
-- Voiding a prior invoice: use `voided-invoice-notice`.
-- Confirming full payment: use `paid-in-full-receipt`.
+| Trigger Group | Use These Templates |
+|---|---|
+| Pre-approval and deposits | `pro-forma-invoice`, `deposit-request-invoice`, `pilot-deposit-invoice`, `discovery-assessment-invoice`, `contract-deposit-invoice` |
+| Delivery and closeout | `milestone-invoice`, `prototype-delivery-invoice`, `evaluation-work-invoice`, `handoff-invoice`, `final-balance-invoice`, `holdback-release-invoice` |
+| Ongoing work | `time-and-materials-invoice`, `monthly-retainer-invoice`, `recurring-support-invoice`, `retainer-renewal-invoice` |
+| Scope changes | `change-order-invoice`, `rush-fee-invoice`, `integration-add-on-invoice`, `expansion-workflow-invoice`, `training-invoice`, `advisory-invoice` |
+| Pass-through and expenses | `usage-pass-through-invoice`, `expense-reimbursement-invoice`, `support-overage-invoice` |
+| Collections and payment status | `late-fee-invoice`, `installment-invoice`, `partial-payment-receipt-invoice`, `paid-in-full-receipt` |
+| Adjustments | `prepayment-credit-invoice`, `discount-adjustment-invoice`, `corrected-invoice`, `termination-invoice`, `refund-memo`, `credit-memo`, `tax-only-invoice`, `voided-invoice-notice` |
 
-When several templates fit, choose the invoice closest to the actual commercial trigger. For example, if a prototype was delivered but the contract bills only on milestone acceptance, use `milestone-invoice`, not `prototype-delivery-invoice`.
+| Selection Rule | Guidance |
+|---|---|
+| Several templates fit | Choose the invoice closest to the actual billing trigger. |
+| Delivery happened before acceptance | If the contract bills on milestone acceptance, use `milestone-invoice`, not `prototype-delivery-invoice`. |
+| Facts are incomplete | Keep missing values as `TBD` and do not invent payment, tax, PO, or banking details. |
 
 ## Quality Rules
 

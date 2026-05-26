@@ -13,7 +13,7 @@ Part of the CompleteTech LLC agentic services skill library. This skill drafts b
 ## OpenClaw / ClawHub Metadata
 
 - Skill key: `agentic-invoice-skill`
-- Version-ready metadata: `1.0.5`
+- Version-ready metadata: `1.0.6`
 - Homepage: https://github.com/CompleteTech-LLC/agentic-invoice-skill
 - README: https://github.com/CompleteTech-LLC/agentic-invoice-skill#readme
 - Runtime binaries: `python3`
