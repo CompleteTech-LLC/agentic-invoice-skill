@@ -2,7 +2,7 @@
 name: agentic-invoice-skill
 description: >-
   Generate branded invoice and billing-document PDFs for agentic development services, including deposits, milestones, retainers, change orders, pass-through expenses, credits, receipts, refunds, and closeout billing. Use when the user wants structured billing documents from verified contract, SOW, milestone, and payment facts.
-version: 1.0.4
+version: 1.0.5
 metadata:
   openclaw:
     skillKey: agentic-invoice-skill
@@ -50,17 +50,34 @@ This skill turns verified billing events, line items, contract references, credi
 
 ## System Boundary
 
-This skill owns billing document drafting and invoice-event selection. Use `agentic-proposal-skill` for pricing rationale or commercial scope before approval, `agentic-contract-skill` for agreement terms, `agentic-delivery-skill` for milestone evidence, `agentic-email-skill` for the message that sends an invoice, and an accounting system or human reviewer for final tax, payment, ledger, and collection decisions.
+| Boundary | Use |
+|---|---|
+| This skill | Billing document drafting and invoice-event selection. |
+| `agentic-proposal-skill` | Pricing rationale or commercial scope before approval. |
+| `agentic-contract-skill` | Agreement terms and payment obligations. |
+| `agentic-delivery-skill` | Milestone evidence, delivery records, and acceptance context. |
+| `agentic-email-skill` | The message that accompanies an invoice. |
+| Accounting system or reviewer | Final tax, payment, ledger, and collection decisions. |
 
 ## Core Workflow
 
-1. Identify the invoice event: estimate, deposit, milestone, monthly retainer, time and materials, change order, expense, final invoice, credit, late fee, refund, or renewal.
-2. Gather required facts: provider, client, invoice number, issue date, due date, terms, currency, contract or SOW reference, project name, billing period, line items, taxes, discounts, credits, previous payments, payment instructions, and notes.
-3. Use `references/invoice-positioning.md` for service language and risk boundaries.
-4. Use `references/use-case-decision-table.md` to choose the right invoice type.
-5. Use `references/invoice-lifecycle.md` for end-to-end billing flow and gates.
-6. Use `references/invoice-catalog.md` for the near-exhaustive invoice template library.
-7. Draft clearly and conservatively. Do not invent tax IDs, banking details, tax rates, contract terms, or legal/accounting claims.
+| Step | Action |
+|---|---|
+| 1 | Identify the invoice event: estimate, deposit, milestone, retainer, time and materials, change order, expense, final invoice, credit, late fee, refund, or renewal. |
+| 2 | Gather the required billing facts. |
+| 3 | Use `references/invoice-positioning.md` for service language and risk boundaries. |
+| 4 | Use `references/use-case-decision-table.md` to choose the right invoice type. |
+| 5 | Use `references/invoice-lifecycle.md` for end-to-end billing flow and gates. |
+| 6 | Use `references/invoice-catalog.md` for the near-exhaustive invoice template library. |
+| 7 | Draft clearly and conservatively; do not invent tax, banking, contract, or accounting facts. |
+
+| Required Fact | Examples |
+|---|---|
+| Parties | Provider, client, billing contact, and legal entity names. |
+| Invoice details | Invoice number, issue date, due date, terms, currency, project name, billing period, and notes. |
+| Commercial reference | Contract, SOW, purchase order, milestone, or delivery evidence. |
+| Amounts | Line items, taxes, discounts, credits, previous payments, and amount due. |
+| Payment handling | Payment instructions, accounting review status, and collection constraints. |
 
 ## Invoice Selection Guide
 
